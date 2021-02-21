@@ -10,6 +10,14 @@ This project contains the prototype of the database system described in
 
 This code is an ongoing work in progress.
 
+Dependencies
+------
+    sudo apt-get update
+    sudo apt-get install -y software-properties-common
+    sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+    sudo apt-get update
+    sudo apt-get install -y build-essential cmake git g++-5 libjemalloc-dev libnuma-dev libdb6.0++-dev libgoogle-perftools-dev papi-tools libaio-dev
+
 Build
 -----
 
@@ -20,7 +28,7 @@ default). `CHECK_INVARIANTS=1` enables invariant checking. There are
 two targets: the default target which builds the test suite, and
 `dbtest` which builds the benchmark suite. Examples:
 
-    MODE=perf DEBUG=1 CHECK_INVARIANTS=1 make -j
+    MASSTREE=1 MODE=factor-gc make -j dbtest
     MODE=perf make -j dbtest
 
 Each different combination of `MODE`, `DEBUG`, and `CHECK_INVARIANTS` triggers
