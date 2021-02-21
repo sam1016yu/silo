@@ -38,6 +38,10 @@ a unique output directory; for example, the first command above builds to
 Silo now uses [Masstree](https://github.com/kohler/masstree-beta) by default as
 the default index tree. To use the old tree, set `MASSTREE=0`.
 
+Reproduced exps
+-----
+see `silo-configs.sh`
+
 Running
 -------
 
