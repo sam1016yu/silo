@@ -173,7 +173,7 @@ static inline ALWAYS_INLINE spinlock &
 LockForPartition(unsigned int wid)
 {
   INVARIANT(g_enable_partition_locks);
-  return g_partition_locks[PartitionId(wid)].elem;
+  return g_partition_locks[wid].elem;
 }
 
 static inline atomic<uint64_t> &
@@ -2036,11 +2036,11 @@ public:
 
     if (g_enable_partition_locks) {
       static_assert(sizeof(aligned_padded_elem<spinlock>) == CACHELINE_SIZE, "xx");
-      void * const px = memalign(CACHELINE_SIZE, sizeof(aligned_padded_elem<spinlock>) * nthreads);
+      void * const px = memalign(CACHELINE_SIZE, sizeof(aligned_padded_elem<spinlock>) * NumWarehouses());
       ALWAYS_ASSERT(px);
       ALWAYS_ASSERT(reinterpret_cast<uintptr_t>(px) % CACHELINE_SIZE == 0);
       g_partition_locks = reinterpret_cast<aligned_padded_elem<spinlock> *>(px);
-      for (size_t i = 0; i < nthreads; i++) {
+      for (size_t i = 0; i < NumWarehouses(); i++) {
         new (&g_partition_locks[i]) aligned_padded_elem<spinlock>();
         ALWAYS_ASSERT(!g_partition_locks[i].elem.is_locked());
       }

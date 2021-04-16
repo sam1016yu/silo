@@ -6,3 +6,5 @@ core
 tags
 config.mk
 out-*
+*.out
+jemalloc.stats
